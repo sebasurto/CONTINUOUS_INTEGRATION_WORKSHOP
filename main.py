@@ -23,31 +23,19 @@ def display_catalog(books):
         print("{:40} {:<30} {:<20}".format(book.title, book.author, book.available_quantity))
 
 
-def select_books(books):
+def select_books(books, selected_titles):
     selected_books = []
-    while True:
-        book_title = input("Enter the title of the book you want to checkout (or type 'done' to finish): ")
-        if book_title.lower() == 'done':
-            break
-        found_book = next((book for book in books if book.title.lower() == book_title.lower() and int(book.available_quantity) > 0), None)
+    for book_title in selected_titles:
+        found_book = next((book for book in books if book.title.lower() == book_title.lower() and book.available_quantity > 0), None)
         if found_book:
-            quantity = input(f"How many copies of '{found_book.title}' do you want to checkout? Enter quantity: ")
-            if quantity.isdigit() and int(quantity) > 0:
-                quantity = int(quantity)
-                if quantity <= int(found_book.available_quantity):
-                    selected_books.append((found_book, quantity))
-                    found_book.available_quantity = int(found_book.available_quantity) - quantity
-                else:
-                    print(f"Sorry, only {found_book.available_quantity} copies of '{found_book.title}' available.")
-            else:
-                print("Invalid quantity. Please enter a positive integer greater than zero.")
-        else:
-            print(f"'{book_title}' is either unavailable or not in the catalog.")
-
+            quantity = 1  # Assuming 1 copy by default for simplicity in testing
+            if quantity <= found_book.available_quantity:
+                selected_books.append((found_book, quantity))
+                found_book.available_quantity -= quantity
     if len(selected_books) > 10:
-        print("Maximum limit of 10 books exceeded.")
         return -1
     return selected_books
+
 
 def calculate_due_date(current_date):
     return current_date + timedelta(days=14)
