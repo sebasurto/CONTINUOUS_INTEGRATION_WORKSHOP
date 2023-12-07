@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime, timedelta
-from __main__ import (
+from main import (
     Book,
     load_books_from_csv,
     select_books,
@@ -16,7 +16,7 @@ mock_books = [
 ]
 
 def test_load_books_from_csv():
-    file_path = 'books_test.csv'
+    file_path = 'books.csv'
     books = load_books_from_csv(file_path)
     assert len(books) > 0  # Assuming the test CSV file contains at least one book entry
 
