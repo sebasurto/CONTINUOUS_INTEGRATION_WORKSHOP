@@ -44,13 +44,13 @@ def test_calculate_late_fee():
     past_date = current_date - timedelta(days=5)
     late_fee = calculate_late_fee(past_date)
     assert late_fee == 5  # Assuming $1 per day for 5 days, late fee should be 5
-def test_calculate_late_fee_failure():
+def test_calculate_late_fee_failure_fixed():
     current_date = datetime.now()
     past_date = current_date - timedelta(days=7)
-    # Aquí se establece un valor incorrecto para la comparación
-    incorrect_late_fee = 10  # Esto se establece intencionalmente como un valor incorrecto
+    correct_late_fee = 7  
     late_fee = calculate_late_fee(past_date)
-    assert late_fee == incorrect_late_fee  # Esta comparación fallará intencionalmente
+    assert late_fee == correct_late_fee  # Ahora la comparación debería ser exitosa
+
 
 if __name__ == '__main__':
     pytest.main()
